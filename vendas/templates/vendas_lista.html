@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Vendas — MiniStore{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Vendas</h1>
+    <a href="{{ url_for('vendas.nova') }}" class="btn btn-primary">Nova Venda</a>
+</div>
+
+{% if vendas %}
+<p>{{ vendas|length }} venda(s) registrada(s).</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Data e Hora</th>
+            <th>Cliente</th>
+            <th>Total (R$)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for venda in vendas %}
+        <tr>
+            <td>{{ venda.id }}</td>
+            <td>{{ venda.data_venda.strftime('%d/%m/%Y %H:%M') if venda.data_venda else '' }}</td>
+            <td>{{ venda.cliente_nome }}</td>
+            <td>{{ venda.total }}</td>
+            <td>
+                <a href="{{ url_for('vendas.detalhes', id=venda.id) }}" class="btn btn-secondary">
+                    Detalhes / Itens
+                </a>
+                <form action="{{ url_for('vendas.excluir', id=venda.id) }}" method="POST" style="display:inline" onsubmit="return confirm('Deseja excluir esta venda?')">
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nenhuma venda registrada.</p>
+{% endif %}
+{% endblock %}

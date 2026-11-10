@@ -7,23 +7,22 @@
     <h1>Dashboard</h1>
 </div>
 
-<div class="cards">
+<div class="dashboard-cards" style="display: flex; gap: 20px; flex-wrap: wrap;">
     <div class="card">
         <div class="card-valor">{{ totais.clientes }}</div>
-        <div class="card-label">Clientes</div>
+        <div class="card-titulo">CLIENTES</div>
     </div>
     <div class="card">
-        <div class="card-valor"></div>
-
-        <div class="card-label">Categorias</div>
+        <div class="card-valor">{{ totais.categorias }}</div>
+        <div class="card-titulo">CATEGORIAS</div>
     </div>
     <div class="card">
-        <div class="card-valor"></div>
-        <div class="card-label">Produtos</div>
+        <div class="card-valor">{{ totais.produtos }}</div>
+        <div class="card-titulo">PRODUTOS</div>
     </div>
     <div class="card">
-        <div class="card-valor"></div>
-        <div class="card-label">Vendas</div>
+        <div class="card-valor">{{ totais.vendas }}</div>
+        <div class="card-titulo">VENDAS</div>
     </div>
 </div>
 {% endblock %}

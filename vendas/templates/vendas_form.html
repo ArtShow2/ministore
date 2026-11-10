@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Nova Venda — MiniStore{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Nova Venda</h1>
+</div>
+
+<form action="{{ url_for('vendas.nova') }}" method="POST">
+    <div class="form-group">
+        <label for="id_cliente">Cliente *</label>
+        <select id="id_cliente" name="id_cliente" class="form-control" required>
+            <option value="">-- Selecione um Cliente --</option>
+            {% for cliente in clientes %}
+                <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Iniciar Venda e Adicionar Produtos</button>
+        <a href="{{ url_for('vendas.listar') }}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

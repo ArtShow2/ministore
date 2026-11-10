@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes da Venda #{{ venda.id }} — MiniStore{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Venda #{{ venda.id }} — {{ venda.cliente_nome }}</h1>
+    <a href="{{ url_for('vendas.listar') }}" class="btn btn-secondary">Voltar</a>
+</div>
+
+<p><strong>Data:</strong> {{ venda.data_venda.strftime('%d/%m/%Y %H:%M') if venda.data_venda else '' }} | <strong>Total:</strong> R$ {{ venda.total }}</p>
+
+<hr style="margin: 20px 0;">
+
+<h2>Adicionar Produto à Venda</h2>
+<form action="{{ url_for('vendas.detalhes', id=venda.id) }}" method="POST">
+    <div class="form-group">
+        <label for="id_produto">Produto *</label>
+        <select id="id_produto" name="id_produto" class="form-control" required>
+            <option value="">-- Selecione um Produto --</option>
+            {% for produto in produtos %}
+                <option value="{{ produto.id }}">{{ produto.nome }} (R$ {{ produto.preco }})</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="quantidade">Quantidade *</label>
+        <input type="number" id="quantidade" name="quantidade" class="form-control" value="1" min="1" required>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Adicionar Item</button>
+    </div>
+</form>
+
+<hr style="margin: 20px 0;">
+
+<h2>Itens da Venda</h2>
+{% if itens %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço Unitário (R$)</th>
+            <th>Subtotal (R$)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in itens %}
+        <tr>
+            <td>{{ item.produto_nome }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>{{ item.preco_unitario }}</td>
+            <td>{{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nenhum item adicionado a esta venda ainda.</p>
+{% endif %}
+{% endblock %}
